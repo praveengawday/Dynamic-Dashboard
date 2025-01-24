@@ -1,42 +1,41 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
-import { WidgetComponent } from "../widget/widget.component";
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DashboardserviceService } from '../../service/dashboardservice.service';
-import { MatButton,  MatIconButton } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu'; 
-import { MatToolbarModule } from '@angular/material/toolbar'; 
-import { MatButtonModule } from '@angular/material/button'; 
-import { wrapGrid} from 'animate-css-grid';
-import { MatSidenavModule} from '@angular/material/sidenav';
-import { RouterModule } from '@angular/router';
-import { CustomNavbarComponent } from "../custom-navbar/custom-navbar.component";
-
-
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import {MatIconModule} from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { WidgetComponent } from '../widget/widget.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [WidgetComponent, RouterModule, MatToolbarModule, MatSidenavModule, MatButtonModule, MatButton, MatIconModule, MatMenuModule, MatButtonModule, ],
-  providers:[DashboardserviceService],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  imports: [MatIconModule, MatMenuModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatListModule, WidgetComponent]
 })
 export class DashboardComponent {
+  @ViewChild('dashboard', { static: false }) dashboard!: ElementRef;
 
-  Store = inject(DashboardserviceService);
+  constructor(public store: DashboardserviceService) {}
 
-  dashboard = viewChild.required<ElementRef>('dashboard');
-  dashboardService: any;
+  /**
+   * Exports the dashboard content to a PDF.
+   */
+  exportDashboardToPDF(): void {
+    const dashboardElement = this.dashboard.nativeElement;
 
-  exportDashboardToPDF() {
-    console.log("export pdf funciton call")
-    this.dashboardService.exportToPDF();
+    html2canvas(dashboardElement).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('dashboard.pdf');
+    });
   }
-
-  ngOnInit(){
-    console.log("this is workig")
-    wrapGrid(this.dashboard().nativeElement, { duration :300})
-  }
-
 }
