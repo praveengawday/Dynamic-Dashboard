@@ -1,0 +1,46 @@
+
+<!-- <div class="header-main">
+    <div class="logo">Logo</div>
+    <div class="user">
+      <div class="user-name">Dashboard</div>
+      <div class="user-image">DB</div>
+    </div>
+</div> -->
+<div class="header">
+    <h2>Dynamic Dashboard</h2>
+    <button mat-raised-button [mat-menu-trigger-for]="WidgetMenu">    
+        <mat-icon>add_circle</mat-icon>
+        Add Widget        
+    </button>
+    <button mat-raised-button (click)="exportDashboardToPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        Export to PDF
+    </button>
+  </div>
+
+<div>
+    <mat-menu #WidgetMenu="matMenu">
+
+        @for (widget of Store.widgetToAdd(); track widget.id) {
+            <button mat-menu-item (click)="Store.addWidget(widget)">
+                {{widget.label}}
+            </button>
+        } @empty {
+            <button mat-menu-item>
+               No Widgets to Add
+            </button>
+
+        }
+           
+    </mat-menu>
+
+ <div #dashboard class="dashboard-widget">
+
+    @for (w of Store.addeddWidgets(); track w.id) {
+  
+        <app-widget [data]="w"></app-widget>
+    }
+    
+</div> 
+
+

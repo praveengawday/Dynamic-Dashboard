@@ -1,0 +1,26 @@
+mat-toolbar{
+    position: relative;
+    z-index:5
+  
+  }
+  mat-sidenav-content {
+    padding: 25px;
+  }
+  
+  mat-sidenav-container {
+    height: 100%;
+    
+  }
+  
+  mat-sidenav {
+    height: 100%;
+    
+  }
+
+
+  mat-sidenav-content,
+  mat-sidenav{
+    transition: all 500ms ease-in-out;
+  }
+
+  

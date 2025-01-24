@@ -1,0 +1,44 @@
+.nav-items {
+  
+    height: 300px;
+    width: 200px;
+    .nav-item {
+      padding: 15px 10px;
+      font-size: 18px;
+      background-color: blue;
+      cursor: pointer;
+      
+  
+      &:hover {
+         background-color: rgb(1, 38, 69);  
+      }
+  
+      span {
+        display: inline;
+        color: white;  
+        
+       
+      }
+    }
+  }
+
+.sidenav-header{
+    padding-top: 24px;
+    text-align: center;
+}
+  .header-text{
+    > h2{
+        margin: 0;
+        font-size: 1.5rem;
+        line-height: 3rem;
+    }
+
+    >P{
+        margin: 0;
+        font-size: 1rem;
+    }
+  }
+.hide-header-text{
+    opacity: 0;
+    height: 0px;
+}

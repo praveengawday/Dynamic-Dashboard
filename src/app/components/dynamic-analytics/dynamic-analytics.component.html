@@ -1,0 +1,20 @@
+<!-- <div class="chart-container">
+    
+    <canvas #chart ></canvas>
+</div>
+<button>Go to channel</button> -->
+
+
+<div class="chart-container">
+    <h4>Students by Favorite Color</h4>
+  
+    <label>
+      <input type="radio" name="chartType" value="pie" [(ngModel)]="chartType" (change)="updateChart()" /> Pie Chart
+    </label>
+    <label>
+      <input type="radio" name="chartType" value="bar" [(ngModel)]="chartType" (change)="updateChart()" /> Bar Chart
+    </label>
+  
+    <canvas id="canvas" class="canvas"></canvas> <!-- Chart.js will render here -->
+  </div>
+  
